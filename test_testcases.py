@@ -2,7 +2,7 @@ from playwright.sync_api import Playwright, sync_playwright, expect
 
 
 def run(playwright: Playwright) -> None:
-    browser = playwright.chromium.launch(headless=False)
+    browser = playwright.chromium.launch(headless=False, devtools=True)
     context = browser.new_context()
     page = context.new_page()
     page.goto("http://127.0.0.1:8000/login/?next=/")
@@ -20,6 +20,10 @@ def run(playwright: Playwright) -> None:
     page.get_by_label("Test description").fill("world")
     page.get_by_role("button", name="Create").click()
     page.get_by_role("link", name="Test Cases").click()
+
+    page.goto("http://127.0.0.1:8000/tests/")
+
+    page.locator('xpath=//td[contains(text(),"hello")]').click()
 
     assert page.locator('xpath=//td[contains(text(),"hello")]') is not None
 
