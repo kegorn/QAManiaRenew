@@ -7,7 +7,7 @@ class App:
         self.browser = playwright.chromium.launch(headless=headless, devtools=devtools, slow_mo=200)
         self.context = self.browser.new_context()
         self.page = self.context.new_page()
-        self.page.set_default_timeout(5000)
+        self.page.set_default_timeout(3000)
         self.base_url = base_url
         self.test_cases = TestCases(self.page)
 
@@ -35,16 +35,7 @@ class App:
         self.page.get_by_label("Test description").fill(test_description)
         self.page.get_by_role("button", name="Create").click()
 
-    # def check_testcase_exist(self, test_name: str):
-    #     # return self.page.locator('xpath=//td[contains(text(),"hello")]')
-    #     return self.page.locator('css=tr').get_by_text(test_name) is not None  # Find text in the row
-    #
-    # def delete_testcase_by_name(self, test_name: str):
-    #     # self.page.locator("//td[text()='hello']//following::button[contains(text(), 'Delete')]").click()
-    #     row = self.page.get_by_role('row', name=test_name).nth(00)
-    #     row.locator('css=.deleteBtn').click()
-
     def close(self):
         self.page.close()
         self.context.close()
-        self.browser.close()
+        # self.browser.close()
