@@ -1,18 +1,19 @@
 from playwright.sync_api import Playwright
-from page_objects.test_cases import TestCases
+from page_objects.page_test_cases import TestCases
 
 
 class App:
-    def __init__(self, playwright: Playwright, base_url: str, headless=False, devtools: str = False):
+    def __init__(self, playwright: Playwright, base_url: str, headless=False, devtools=False):
         self.browser = playwright.chromium.launch(headless=headless, devtools=devtools, slow_mo=200)
         self.context = self.browser.new_context()
         self.page = self.context.new_page()
+        self.page.set_default_timeout(5000)
         self.base_url = base_url
         self.test_cases = TestCases(self.page)
 
     def goto(self, endpoint: str, use_base_url=True):
         if use_base_url:
-            self.page.goto(self.base_url + endpoint) #"http://127.0.0.1:8000/login/?next=/"
+            self.page.goto(self.base_url + endpoint)  # "http://127.0.0.1:8000/login/?next=/"
         else:
             self.page.goto(endpoint)
 
