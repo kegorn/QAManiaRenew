@@ -18,3 +18,7 @@ https://devhints.io/css
 https://playwright.dev/python/docs/api/class-selectors
 
 http://www.whitebeam.org/library/guide/TechNotes/xpathtestbed.rhtm
+
+
+Playwright Python: 12 Configurations
+
