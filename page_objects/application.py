@@ -38,4 +38,4 @@ class App:
     def close(self):
         self.page.close()
         self.context.close()
-        # self.browser.close()
+        self.browser.close()
