@@ -1,5 +1,5 @@
 from playwright.sync_api import Playwright
-from page_objects.page_test_cases import TestCases
+from page_objects.test_cases_page import TestCases
 
 
 class App:
