@@ -22,7 +22,6 @@ class App:
         # self.page.locator(".menuBox ")
         self.page.wait_for_load_state()
 
-
     def login(self, username: str, password: str):
         self.page.get_by_label("Username:").click()
         self.page.get_by_label("Username:").fill(username)
@@ -49,7 +48,7 @@ class App:
     def close(self):
         self.page.close()
         self.context.close()
-        self.browser.close()
+        # self.browser.close()
 
     def pause(self):
         self.page.pause()
