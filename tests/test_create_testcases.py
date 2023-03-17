@@ -1,13 +1,13 @@
 from pytest import mark
 
 ddt = {
-    'argnames' : 'test_name, description',
-    'argvalues' : [('hello', 'world'),
-                 ('hello', ''),
-                 ('12345', 'world')],
-    'ids' : ['general test',
-             'test with no description',
-             'test with digits in name']
+    'argnames': 'test_name, description',
+    'argvalues': [('hello', 'world'),
+                  ('hello', ''),
+                  ('12345', 'world')],
+    'ids': ['general test',
+            'test with no description',
+            'test with digits in name']
 }
 
 
@@ -19,3 +19,4 @@ def test_new_testcase(desktop_app_auth, test_name, description):
     test_result = desktop_app_auth.test_cases.check_testcase_exist(test_name), 'this test failed'
     desktop_app_auth.test_cases.delete_testcase_by_name(test_name)
     assert test_result
+

@@ -3,9 +3,15 @@ from page_objects.test_cases_page import TestCases
 
 
 class App:
-    def __init__(self, playwright: Playwright, base_url: str, headless=False, devtools=False):
+    def __init__(self, playwright: Playwright, base_url: str, headless=False, devtools=False, device=None, **kwargs):
+        device_config = playwright.devices.get(device)
+        if device_config is not None:
+            device_config.update(kwargs)
+        else:
+            device_config = kwargs
+
         self.browser = playwright.chromium.launch(headless=headless, devtools=devtools, slow_mo=200)
-        self.context = self.browser.new_context()
+        self.context = self.browser.new_context(**device_config)
         self.page = self.context.new_page()
         self.page.set_default_timeout(3000)
         self.base_url = base_url
@@ -19,7 +25,7 @@ class App:
 
     def navigate_to(self, menu: str):
         self.page.get_by_role("link", name=f"{menu}").click()
-        self.page.locator(".menuBox ")
+        # self.page.locator(".menuBox ")
 
     def login(self, username: str, password: str):
         self.page.get_by_label("Username:").click()
@@ -35,7 +41,20 @@ class App:
         self.page.get_by_label("Test description").fill(test_description)
         self.page.get_by_role("button", name="Create").click()
 
+    def click_menu_button(self):
+        self.page.locator('.menuBtn').click()
+
+    def is_menu_button_visible(self):
+        return self.page.locator('.menuBtn').is_visible()
+
+    def get_location(self):
+        return self.page.locator('.position').text_content()
+
     def close(self):
         self.page.close()
         self.context.close()
         self.browser.close()
+
+    def pause(self):
+        self.page.pause()
+
