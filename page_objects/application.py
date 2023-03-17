@@ -1,17 +1,11 @@
-from playwright.sync_api import Playwright
+from playwright.sync_api import Browser
 from page_objects.test_cases_page import TestCases
 
 
 class App:
-    def __init__(self, playwright: Playwright, base_url: str, headless=False, devtools=False, device=None, **kwargs):
-        device_config = playwright.devices.get(device)
-        if device_config is not None:
-            device_config.update(kwargs)
-        else:
-            device_config = kwargs
-
-        self.browser = playwright.chromium.launch(headless=headless, devtools=devtools, slow_mo=200)
-        self.context = self.browser.new_context(**device_config)
+    def __init__(self, browser: Browser, base_url: str, **kwargs):
+        self.browser = browser
+        self.context = self.browser.new_context(**kwargs)
         self.page = self.context.new_page()
         self.page.set_default_timeout(3000)
         self.base_url = base_url
@@ -26,6 +20,8 @@ class App:
     def navigate_to(self, menu: str):
         self.page.get_by_role("link", name=f"{menu}").click()
         # self.page.locator(".menuBox ")
+        self.page.wait_for_load_state()
+
 
     def login(self, username: str, password: str):
         self.page.get_by_label("Username:").click()
