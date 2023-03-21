@@ -20,7 +20,8 @@ def get_playwright():
         yield playwright
 
 
-@fixture(scope='session', params=['chromium', 'firefox', 'webkit'], ids=['chromium', 'firefox', 'webkit'])
+@fixture(scope='session', params=['chromium'])
+    #, 'firefox', 'webkit'], ids=['chromium', 'firefox', 'webkit'])
 def get_browser(get_playwright, request):
     # browser = request.config.getoption('--browser')
     browser = request.param

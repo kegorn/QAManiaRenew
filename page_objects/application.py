@@ -1,6 +1,6 @@
 from playwright.sync_api import Browser
 from page_objects.test_cases_page import TestCases
-
+from page_objects.demo_page import DemoPage
 
 class App:
     def __init__(self, browser: Browser, base_url: str, **kwargs):
@@ -10,6 +10,7 @@ class App:
         self.page.set_default_timeout(3000)
         self.base_url = base_url
         self.test_cases = TestCases(self.page)
+        self.demo_page = DemoPage(self.page)
 
     def goto(self, endpoint: str, use_base_url=True):
         if use_base_url:
