@@ -1,3 +1,4 @@
+import logging
 import pytest
 from pytest import fixture
 from playwright.sync_api import sync_playwright
@@ -9,9 +10,11 @@ import json
 
 @fixture(autouse=True, scope='function')
 def pre_post_conditions():
-    print('setup pre conditions')
+    # print('setup pre conditions')
+    logging.info('preconditions started')
     yield
-    print('setup post conditions')
+    # print('setup post conditions')
+    logging.info('postconditions started')
 
 
 @fixture(scope='session')
